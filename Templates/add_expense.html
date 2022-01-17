@@ -1,0 +1,37 @@
+{% include 'home.html' %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Add Expense - Expense Management Site</title>
+  </head>
+  <body>
+    <br><br>
+    <center>
+    <h2>Add Your Expenses</h2>
+
+    <form method="post">
+
+      <div >
+        <label for="Date">Date</label>
+        <input type="date" placeholder="Enter Date" name="date" required>
+        <br><br>
+        <label for="">Name</label>
+        <input type="text" placeholder="Enter Your Name" name="name" required>
+        <br><br>
+        <label for="prod-name">Product Name</label>
+        <input type="text" placeholder="Enter Product Name" name="prod_name" required>
+        <br><br>
+        <label for="prod_Qty">Product Quantity</label>
+        <input type="text" placeholder="Enter Product Quantity" name="prod_Qty" required>
+        <br><br>
+        <label for="price">Price</label>
+        <input type="text" placeholder="Enter Product Price" name="price" required>
+        <br><br>
+        <button type="submit">Save</button>
+      </div>
+
+    </form>
+    </center>
+  </body>
+</html>

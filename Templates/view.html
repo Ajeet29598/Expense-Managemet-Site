@@ -1,0 +1,38 @@
+{% include 'home.html' %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Display Total Expenses - Expense Management Site</title>
+    <style> table, th, td { border:1px solid black; width: auto;}</style>
+  </head>
+  <body>
+    <br><br><br><br>
+    <center>
+      <h2>Table of All Expenses </h2>
+        <br>
+        <table >
+          <thead>
+            <th>Date</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Products</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </thead>
+
+          {% for row in rows %}
+            <tr>
+              <td>{{row["Date"]}}</td>
+              <td>{{row["id"]}}</td>
+              <td>{{row["name"]}}</td>
+              <td>{{row["Product"]}}</td>
+              <td>{{row["prod_Qty"]}}</td>
+              <td>{{row["prod_price"]}}</td>
+            </tr>
+          {% endfor %}
+        </table>
+
+    </center>
+  </body>
+</html>
