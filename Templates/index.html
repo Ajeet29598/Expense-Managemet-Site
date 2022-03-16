@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid home-main">
+        <h1><span class="blinker">Welcome</span></h1>
+        <h3><span class="blinker">To</span></h3>
+        <h1>Expense Management System</h1>
+        <h6>Here, We can manage our all daily Expenses.</h6>
+        <button type="button"  class="btn btn-default"><a class="a" href="{{url_for('login')}}" class="ml-2">Login / Sign Up</a></button>
+    </div>
+    <div class="container-fluid home-content1">
+        <div class="row">
+            <div class="col-md-6 content1">
+                <h3>Why to use Bootstrap <span class="blinker">?</span></h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni architecto in nesciunt ducimus earum, et enim rem officia autem temporibus perspiciatis dolorum, asperiores voluptatum officiis. Qui recusandae sed consequatur repellat.  Build responsive, mobile-first projects on the web with the world’s most popular front-end component library.</p>
+                <div class="content1-left"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid home-content2">
+        <p><span>News</span> and <span>announcements</span> for all things <span>Bootstrap</span>, including new
+            <span>releases</span> and <span>Bootstrap Themes</span>.</p>
+    </div>
+</body>
+</html>

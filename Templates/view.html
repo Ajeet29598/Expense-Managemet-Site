@@ -1,38 +1,64 @@
-{% include 'home.html' %}
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Display Total Expenses - Expense Management Site</title>
-    <style> table, th, td { border:1px solid black; width: auto;}</style>
-  </head>
-  <body>
-    <br><br><br><br>
-    <center>
-      <h2>Table of All Expenses </h2>
-        <br>
-        <table >
-          <thead>
-            <th>Date</th>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Products</th>
-            <th>Quantity</th>
-            <th>Price</th>
-          </thead>
+{% extends 'layout.html'%}
+{% block content %}
 
-          {% for row in rows %}
-            <tr>
-              <td>{{row["Date"]}}</td>
-              <td>{{row["id"]}}</td>
-              <td>{{row["name"]}}</td>
-              <td>{{row["Product"]}}</td>
-              <td>{{row["prod_Qty"]}}</td>
-              <td>{{row["prod_price"]}}</td>
-            </tr>
+<link rel="stylesheet" href="{{url_for('static', filename='view.css')}}">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<center><h1>All Expenses</h1></center>
+ 
+
+<div class="container">
+  <div class="">
+    <table class="table table-striped custab">
+      <thead>
+
+        <tr>
+          <th>Date</th>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Products</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>User Id</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+
+      {% for row in rows %}
+      <tr>
+        <td>{{row["date_"]}}</td>
+        <td>{{row["id"]}}</td>
+        <td>{{row["name"]}}</td>
+        <td>{{row["products"]}}</td>
+        <td>{{row["prod_qnty"]}}</td>
+        <td>{{row["prod_price"]}}</td>
+        <td>{{row["user_id"]}}</td>
+
+        <td class="text-center">
+          <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span>Edit</a> 
+          <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+        </td>
+        {% with messages=get_flashed_messages() %}
+        {% if messages %}
+          {% for msg in messages %}
+      
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{msg}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
           {% endfor %}
-        </table>
+        {% endif %}
+      {% endwith %} 
+      
+      </tr>
 
-    </center>
-  </body>
-</html>
+      {% endfor %}
+
+    </table>
+  </div>
+</div>
+{% endblock %}
