@@ -4,8 +4,8 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-
-<center><h1>All Expenses</h1></center>
+<br>
+<center><h2>All Expenses</h2></center>
 
 {% with messages=get_flashed_messages() %}
 {% if messages %}
@@ -20,6 +20,7 @@
   {% endfor %}
 {% endif %}
 {% endwith %}
+</center>
 <div class="container">
   <div class="">
     <table class="table table-striped custab">
