@@ -1,19 +1,30 @@
 {% extends 'layout.html'%}
 {% block content %}
-
 <link rel="stylesheet" href="{{url_for('static', filename='view.css')}}">
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<center><h1>All Expenses</h1></center>
- 
 
+<center><h1>All Expenses</h1></center>
+
+{% with messages=get_flashed_messages() %}
+{% if messages %}
+  {% for msg in messages %}
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+{{msg}}
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+  {% endfor %}
+{% endif %}
+{% endwith %}
 <div class="container">
   <div class="">
     <table class="table table-striped custab">
-      <thead>
-
+      
+      <thead class="">
         <tr>
           <th>Date</th>
           <th>Id</th>
@@ -35,30 +46,14 @@
         <td>{{row["prod_qnty"]}}</td>
         <td>{{row["prod_price"]}}</td>
         <td>{{row["user_id"]}}</td>
-
         <td class="text-center">
-          <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span>Edit</a> 
-          <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+          <a class='btn btn-info btn-sm' href="/update/{{row.id}}"><span class="glyphicon glyphicon-edit"></span>Update</a> 
+          <a href="/delete/{{row.id}}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span> Delete</a>
         </td>
-        {% with messages=get_flashed_messages() %}
-        {% if messages %}
-          {% for msg in messages %}
-      
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{msg}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %} 
-      
-      </tr>
-
+        </tr>
       {% endfor %}
-
     </table>
   </div>
 </div>
-{% endblock %}
+<br><br>
+{% endblock %} 

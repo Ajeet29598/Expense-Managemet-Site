@@ -50,7 +50,6 @@ def signup():
         cursor.execute(query,(email,username,password))
         connection.commit()
 
-
         if cursor.rowcount == 1:
             return redirect(url_for('login'))
         else:
@@ -63,7 +62,6 @@ def home():
         return render_template('home.html')
     else:     
         return redirect(url_for('login'))
-
 
 @app.route('/add_expenses',methods=['GET','POST'])
 def add_expenses():
@@ -83,11 +81,11 @@ def add_expenses():
             query = "INSERT INTO Products (date_, name, products, prod_qnty, prod_price,user_id) VALUES(?,?,?,?,?,?)"
             cursor.execute(query,(date_, name, products, prod_qnty, prod_price,user_id))
             connection.commit()
-
+            flash('Expense Saved Successfully')
             if cursor.rowcount == 1:
-                return redirect(url_for('view'))
+                return redirect(url_for('add_expenses'))
             else:
-                print("data insert not successfull")
+                flash('Saved Unsuccessfull')
         return render_template('add_expense.html')
     else:
         return redirect(url_for('login'))
@@ -104,14 +102,42 @@ def view():
     else:
         return redirect(url_for('login'))
 
-@app.route('/delete/<string:id>',methods=['POST','GET'])
+@app.route('/update/<int:id>',methods=['POST','GET'])
+def update(id):
+    connection = sqlite3.connect("users.db")
+    connection.row_factory = sqlite3.Row
+    cursor = connection.cursor()
+    cursor.execute('select * from Products WHERE id={0}'.format(id))
+    rows = cursor.fetchone()
+    connection.close()
+
+    if request.method=='POST':
+        try:
+            date_ = request.form['date']
+            name = request.form['name']
+            products = request.form['prod_name']
+            prod_qnty = request.form['prod_Qty']
+            prod_price = request.form['price']
+            user_id = request.form['user-id']
+            con = sqlite3.connect("users.db")
+            cur=con.cursor()
+            cur.execute('Update Products set date_= ?, name=?, products=?, prod_qnty=?, prod_price=?,user_id=?  WHERE id=?',(date_,name,products,prod_qnty,prod_price,user_id,id))
+            con.commit()
+            flash('Updated Successfully')
+        except:
+            flash('Updation Error')
+        finally:
+            return redirect(url_for('view'))
+    return render_template('update.html',rows = rows)
+
+@app.route('/delete/<int:id>',methods=['POST','GET'])
 def delete(id):
     connection = sqlite3.connect("users.db")
     cursor = connection.cursor()
     cursor.execute('DELETE from Products WHERE id={0}'.format(id))
     connection.commit() 
+    flash('Deleted Successfully')
     return redirect(url_for('view'))
-
 
 @app.route('/error')
 def error():
@@ -124,6 +150,7 @@ def contact():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
 @app.route('/logout')
 def logout():
     session.pop('email',None)

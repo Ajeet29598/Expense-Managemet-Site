@@ -5,19 +5,12 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Add Expense - Expense Management Site</title>
-  <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+  <title>Edit - Expense Management Site</title>
 </head>
-
 <body>
-  <center>
   <br><br>
- 
-    <h2>Add Your Expenses</h2>
+  <center>
+    <h2>Edit Your Expenses</h2>
     <br>
   {% with messages=get_flashed_messages() %}
     {% if messages %}
@@ -28,48 +21,45 @@
         <span aria-hidden="true">&times;</span>
         </button>
         </div>
-      {% endfor %}
+      {% endfor %}  
     {% endif %}
   {% endwith %} 
-<br>
-    
+  
     <form method="post" class="row g-3 needs-validation" novalidate">
       <div class="col-md-4">
         <label for="validationDefault01" class="form-label">Date</label>
         <!-- <input type="date" placeholder="Enter Date" name="date" required> -->
-        <input type="date" class="form-control" id="validationDefault01" name="date" placeholder="Enter Date" required>
+        <input type="date" class="form-control" id="validationDefault01" name="date" placeholder="Enter Date" value="{{rows['date_']}}" required>
       </div>
       <div class="col-md-4">
         <label for="validationDefault02" class="form-label">Your Name</label>
-        <input type="text" class="form-control" id="validationDefault02" name='name' placeholder="Enter Your Name" required>
+        <input type="text" class="form-control" id="validationDefault02" name='name' placeholder="Enter Your Name" value="{{rows['name']}}" required>
       </div>
       <div class="col-md-4">
         <label for="validationDefault02" class="form-label">Product Name</label>
-        <input type="text" class="form-control" id="validationDefault02" name='prod_name' placeholder="Enter Product Name" required>
+        <input type="text" class="form-control" id="validationDefault02" name='prod_name' placeholder="Enter Product Name" value="{{rows['Products']}}" required>
       </div> 
       <div class="col-md-4">
         <label for="validationDefault02" class="form-label">Product Quantity</label>
-        <input type="text" class="form-control" id="validationDefault02" name='prod_Qty' placeholder="Enter Product Quantity" required>
+        <input type="text" class="form-control" id="validationDefault02" name='prod_Qty' placeholder="Enter Product Quantity" value="{{rows['prod_qnty']}}" required>
       </div>
        <div class="col-md-4">
         <label for="validationDefault02" class="form-label">Product Price</label>
-        <input type="text" class="form-control" id="validationDefault02" name='price' placeholder="Enter Product Price" required>
+        <input type="text" class="form-control" id="validationDefault02" name='price' placeholder="Enter Product Price" value="{{rows['prod_price']}}" required>
         <br><br>
       </div>
       <div class="col-md-4">
         <label for="validationDefault02" class="form-label">User id</label>
-        <input type="text" class="form-control" id="validationDefault02" name='user-id' placeholder="Enter Unique User Id" required>
+        <input type="text" class="form-control" id="validationDefault02" name='user-id' placeholder="Enter Unique User Id" value="{{rows['user_id']}}" required>
       </div>
       
       <div class="col-12">
         <button class="btn btn-primary" type="submit">Save Expenses</button>
+        <br><br><br>
       </div>
-     
+      
     </form>
-    <br><br>
   </center>
-  
-  
 </body>
 
 </html>

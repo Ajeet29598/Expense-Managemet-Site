@@ -18,16 +18,15 @@
 </head>
 
 <body>
-  <div class="jumbotron text-center" style="margin-bottom:-50px; margin-top: -50px;">
+  
+  <div class="jumbotron text-center" style="margin-bottom:-20px; margin-top: -30px;">
     <h1><a style="text-decoration: none; color: black;" href="{{url_for('home')}}">Expense Management System</a></h1>
-    <h6>Here, We can manage our daily Expenses...</h6>
+    <h5>Here, We can manage our daily Expenses...</h5>
   </div>
 
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" href="{{url_for('home')}}">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="collapsibleNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -37,22 +36,22 @@
           <a class="nav-link" href="{{url_for('view')}}"> View Expenses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('contact')}}">contact</a>
+          <a class="nav-link" href="{{url_for('contact')}}">Contact</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{url_for('about')}}">About</a>
         </li>
       </ul>
     </div>
-   
-    <a href="{{url_for('logout')}}"><button class="btn btn-success" type="button">Logout</button></a>
+   <a href="{{url_for('logout')}}"><button class="btn btn-success" type="button">Logout</button></a>
   </nav>
   {% block content %}
   
   {% endblock %}
 
-  <div class="jumbotron text-center" style="margin-bottom:0">
-    <p>Expense Management Site</p>
+  <div class="jumbotron text-center" style="margin-bottom:0px; margin-top: 0px;">
+    <h2>Expense Management System</h2>
+    <h5>Here, We can manage our daily Expenses...</h5>
   </div>
 
 </body>
