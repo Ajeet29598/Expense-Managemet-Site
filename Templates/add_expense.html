@@ -16,7 +16,6 @@
 <body>
   <center>
   <br><br>
- 
     <h2>Add Your Expenses</h2>
     <br>
   {% with messages=get_flashed_messages() %}
@@ -30,46 +29,50 @@
         </div>
       {% endfor %}
     {% endif %}
-  {% endwith %} 
+  {% endwith %}
+</center> 
 <br>
-    
-    <form method="post" class="row g-3 needs-validation" novalidate">
-      <div class="col-md-4">
-        <label for="validationDefault01" class="form-label">Date</label>
-        <!-- <input type="date" placeholder="Enter Date" name="date" required> -->
-        <input type="date" class="form-control" id="validationDefault01" name="date" placeholder="Enter Date" required>
+    <form method="post" class="row g-3">
+      <div class="form-row">
+      <div class="col  mx-sm-5">
+        <label>Date</label>
+        <input type="date" class="form-control" name="date" placeholder="Enter Date" required>
       </div>
-      <div class="col-md-4">
+      <div class="col mx-sm-5">
         <label for="validationDefault02" class="form-label">Your Name</label>
-        <input type="text" class="form-control" id="validationDefault02" name='name' placeholder="Enter Your Name" required>
+        <input type="text" class="form-control" name='name' placeholder="Enter Your Name" required>
       </div>
-      <div class="col-md-4">
-        <label for="validationDefault02" class="form-label">Product Name</label>
-        <input type="text" class="form-control" id="validationDefault02" name='prod_name' placeholder="Enter Product Name" required>
+      <div class="col mx-sm-5">
+        <label>Product Name</label>
+        <input type="text" class="form-control" name='prod_name' placeholder="Enter Product Name" required>
       </div> 
-      <div class="col-md-4">
-        <label for="validationDefault02" class="form-label">Product Quantity</label>
-        <input type="text" class="form-control" id="validationDefault02" name='prod_Qty' placeholder="Enter Product Quantity" required>
+    </div>
+      <div class="form-row">
+      <div class="col mx-sm-5">
+        <label>Product Quantity</label>
+        <input type="text" class="form-control" name='prod_Qty' placeholder="Enter Product Quantity" required>
       </div>
-       <div class="col-md-4">
-        <label for="validationDefault02" class="form-label">Product Price</label>
-        <input type="text" class="form-control" id="validationDefault02" name='price' placeholder="Enter Product Price" required>
-        <br><br>
+       <div class="col mx-sm-5">
+        <label>Product Price</label>
+        <input type="text" class="form-control" name='price' placeholder="Enter Product Price" required>
+
       </div>
-      <div class="col-md-4">
-        <label for="validationDefault02" class="form-label">User id</label>
-        <input type="text" class="form-control" id="validationDefault02" name='user-id' placeholder="Enter Unique User Id" required>
+      <div class="col mx-sm-5">
+        <label>User id</label>
+        <input type="text" class="form-control"  name='user-id' placeholder="Enter Unique User Id" required>
       </div>
-      
-      <div class="col-12">
+    </div>
+    </div>
+    <br><br>
+    <center>
+      <div class="form-row">
+      <div class="col mx-sm-5"> 
         <button class="btn btn-primary" type="submit">Save Expenses</button>
       </div>
-     
+    </center>
     </form>
     <br><br>
-  </center>
-  
-  
+
 </body>
 
 </html>
