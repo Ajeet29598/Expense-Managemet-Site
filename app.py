@@ -4,7 +4,7 @@ import sqlite3
 
 app = Flask(__name__)
 app.secret_key= 'Ajeet'
-app.permanent_session_lifetime=timedelta(minutes=10)
+app.permanent_session_lifetime=timedelta(minutes=30)
 
 
 @app.route('/', methods=['GET','POST'] )
@@ -25,13 +25,14 @@ def login():
         
         cursor.execute('SELECT * FROM Users WHERE username = ? AND password = ?', (Username, password ))
         data = cursor.fetchone()
-        
+
         if  data!=None:
             flash('Logged in Successfully...')
             session['email']=data[1]
             return redirect(url_for('home'))
         else:
             return redirect(url_for('error'))
+
 
     return render_template('login.html')
 
@@ -103,52 +104,60 @@ def view():
         return redirect(url_for('login'))
 
 @app.route('/update/<int:id>',methods=['POST','GET'])
-def update(id):
-    connection = sqlite3.connect("users.db")
-    connection.row_factory = sqlite3.Row
-    cursor = connection.cursor()
-    cursor.execute('select * from Products WHERE id={0}'.format(id))
-    rows = cursor.fetchone()
-    connection.close()
 
-    if request.method=='POST':
-        try:
-            date_ = request.form['date']
-            name = request.form['name']
-            products = request.form['prod_name']
-            prod_qnty = request.form['prod_Qty']
-            prod_price = request.form['price']
-            user_id = request.form['user-id']
-            con = sqlite3.connect("users.db")
-            cur=con.cursor()
-            cur.execute('Update Products set date_= ?, name=?, products=?, prod_qnty=?, prod_price=?,user_id=?  WHERE id=?',(date_,name,products,prod_qnty,prod_price,user_id,id))
-            con.commit()
-            flash('Updated Successfully')
-        except:
-            flash('Updation Error')
-        finally:
-            return redirect(url_for('view'))
-    return render_template('update.html',rows = rows)
+def update(id):
+    if 'email' in session:
+        connection = sqlite3.connect("users.db")
+        connection.row_factory = sqlite3.Row
+        cursor = connection.cursor()
+        cursor.execute('select * from Products WHERE id={0}'.format(id))
+        rows = cursor.fetchone()
+        connection.close()
+
+        if request.method=='POST':
+            try:
+                date_ = request.form['date']
+                name = request.form['name']
+                products = request.form['prod_name']
+                prod_qnty = request.form['prod_Qty']
+                prod_price = request.form['price']
+                user_id = request.form['user-id']
+                con = sqlite3.connect("users.db")
+                cur=con.cursor()
+                cur.execute('Update Products set date_= ?, name=?, products=?, prod_qnty=?, prod_price=?,user_id=?  WHERE id=?',(date_,name,products,prod_qnty,prod_price,user_id,id))
+                con.commit()
+                flash('Updated Successfully')
+            except:
+                flash('Updation Error')
+            finally:
+                return redirect(url_for('view'))
+        return render_template('update.html',rows = rows)
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/delete/<int:id>',methods=['POST','GET'])
 def delete(id):
-    connection = sqlite3.connect("users.db")
-    cursor = connection.cursor()
-    cursor.execute('DELETE from Products WHERE id={0}'.format(id))
-    connection.commit() 
-    flash('Deleted Successfully')
-    return redirect(url_for('view'))
-
+    if 'email' in session:
+        connection = sqlite3.connect("users.db")
+        cursor = connection.cursor()
+        cursor.execute('DELETE from Products WHERE id={0}'.format(id))
+        connection.commit() 
+        flash('Deleted Successfully')
+        return redirect(url_for('view'))
+    else:
+        return redirect(url_for('login'))
 @app.route('/error')
 def error():
     return render_template('error.html')
 
 @app.route('/contact')
 def contact():
+    session.pop('email',None)
     return render_template('contact.html')
 
 @app.route('/about')
 def about():
+    session.pop('email',None)
     return render_template('about.html')
 
 @app.route('/logout')
