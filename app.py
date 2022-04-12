@@ -77,10 +77,9 @@ def add_expenses():
             products = request.form['prod_name']
             prod_qnty = request.form['prod_Qty']
             prod_price = request.form['price']
-            user_id = request.form['user-id']
 
-            query = "INSERT INTO Products (date_, name, products, prod_qnty, prod_price,user_id) VALUES(?,?,?,?,?,?)"
-            cursor.execute(query,(date_, name, products, prod_qnty, prod_price,user_id))
+            query = "INSERT INTO Products (date_, name, products, prod_qnty, prod_price) VALUES(?,?,?,?,?)"
+            cursor.execute(query,(date_, name, products, prod_qnty, prod_price))
             connection.commit()
             flash('Expense Saved Successfully')
             if cursor.rowcount == 1:
@@ -121,10 +120,10 @@ def update(id):
                 products = request.form['prod_name']
                 prod_qnty = request.form['prod_Qty']
                 prod_price = request.form['price']
-                user_id = request.form['user-id']
+        
                 con = sqlite3.connect("users.db")
                 cur=con.cursor()
-                cur.execute('Update Products set date_= ?, name=?, products=?, prod_qnty=?, prod_price=?,user_id=?  WHERE id=?',(date_,name,products,prod_qnty,prod_price,user_id,id))
+                cur.execute('Update Products set date_= ?, name=?, products=?, prod_qnty=?, prod_price=?  WHERE id=?',(date_,name,products,prod_qnty,prod_price,id))
                 con.commit()
                 flash('Updated Successfully')
             except:
@@ -152,13 +151,17 @@ def error():
 
 @app.route('/contact')
 def contact():
-    session.pop('email',None)
-    return render_template('contact.html')
+    if 'email' in session:
+        return render_template('contact.html')
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/about')
 def about():
-    session.pop('email',None)
-    return render_template('about.html')
+    if 'email' in session:
+        return render_template('about.html')
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
