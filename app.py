@@ -1,16 +1,12 @@
-from datetime import timedelta
 from flask import Flask, redirect, render_template, request, url_for, session ,flash
 import sqlite3
 
 app = Flask(__name__)
 app.secret_key= 'Ajeet'
-app.permanent_session_lifetime=timedelta(minutes=30)
-
 
 @app.route('/', methods=['GET','POST'] )
 def index():
     return render_template('index.html')
-
 
 @app.route('/login',methods = ['GET','POST'])
 def login():
@@ -19,21 +15,16 @@ def login():
         session.permanent=True
         connection = sqlite3.connect('users.db')
         cursor = connection.cursor()
-
         Username = request.form['u_name']
         password = request.form['pass']
-        
         cursor.execute('SELECT * FROM Users WHERE username = ? AND password = ?', (Username, password ))
         data = cursor.fetchone()
-
         if  data!=None:
             flash('Logged in Successfully...')
-            session['email']=data[1]
+            session['user']=data[1]
             return redirect(url_for('home'))
         else:
             return redirect(url_for('error'))
-
-
     return render_template('login.html')
 
 @app.route('/signup', methods=['GET','POST'])
@@ -46,11 +37,9 @@ def signup():
         email = request.form['email']
         username = request.form['username']
         password = request.form['password']
-
         query = "INSERT INTO Users (email,username,password) VALUES(?,?,?)"
         cursor.execute(query,(email,username,password))
         connection.commit()
-
         if cursor.rowcount == 1:
             return redirect(url_for('login'))
         else:
@@ -59,25 +48,22 @@ def signup():
 
 @app.route('/home')
 def home():
-    if 'email' in session:
+    if 'user' in session:
         return render_template('home.html')
     else:     
         return redirect(url_for('login'))
 
 @app.route('/add_expenses',methods=['GET','POST'])
 def add_expenses():
-    if 'email' in session:
+    if 'user' in session:
         connection = sqlite3.connect("users.db")
         cursor = connection.cursor()
-
         if request.method == 'POST':
-
             date_ = request.form['date']
             name = request.form['name']
             products = request.form['prod_name']
             prod_qnty = request.form['prod_Qty']
             prod_price = request.form['price']
-
             query = "INSERT INTO Products (date_, name, products, prod_qnty, prod_price) VALUES(?,?,?,?,?)"
             cursor.execute(query,(date_, name, products, prod_qnty, prod_price))
             connection.commit()
@@ -92,7 +78,7 @@ def add_expenses():
 
 @app.route('/view',methods = ['GET','POST'])
 def view():
-    if 'email' in session: 
+    if 'user' in session: 
         connection = sqlite3.connect("users.db")
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
@@ -103,16 +89,14 @@ def view():
         return redirect(url_for('login'))
 
 @app.route('/update/<int:id>',methods=['POST','GET'])
-
 def update(id):
-    if 'email' in session:
+    if 'user' in session:
         connection = sqlite3.connect("users.db")
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
         cursor.execute('select * from Products WHERE id={0}'.format(id))
         rows = cursor.fetchone()
         connection.close()
-
         if request.method=='POST':
             try:
                 date_ = request.form['date']
@@ -120,7 +104,6 @@ def update(id):
                 products = request.form['prod_name']
                 prod_qnty = request.form['prod_Qty']
                 prod_price = request.form['price']
-        
                 con = sqlite3.connect("users.db")
                 cur=con.cursor()
                 cur.execute('Update Products set date_= ?, name=?, products=?, prod_qnty=?, prod_price=?  WHERE id=?',(date_,name,products,prod_qnty,prod_price,id))
@@ -136,7 +119,7 @@ def update(id):
 
 @app.route('/delete/<int:id>',methods=['POST','GET'])
 def delete(id):
-    if 'email' in session:
+    if 'user' in session:
         connection = sqlite3.connect("users.db")
         cursor = connection.cursor()
         cursor.execute('DELETE from Products WHERE id={0}'.format(id))
@@ -145,27 +128,28 @@ def delete(id):
         return redirect(url_for('view'))
     else:
         return redirect(url_for('login'))
+
 @app.route('/error')
 def error():
     return render_template('error.html')
 
 @app.route('/contact')
 def contact():
-    if 'email' in session:
+    if 'user' in session:
         return render_template('contact.html')
     else:
         return redirect(url_for('login'))
 
 @app.route('/about')
 def about():
-    if 'email' in session:
+    if 'user' in session:
         return render_template('about.html')
     else:
         return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
-    session.pop('email',None)
+    session.pop('user',None)
     flash('Logged out Successfully...')
     return redirect(url_for('login'))
 
