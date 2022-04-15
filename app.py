@@ -15,9 +15,9 @@ def login():
         session.permanent=True
         connection = sqlite3.connect('users.db')
         cursor = connection.cursor()
-        Username = request.form['u_name']
+        username = request.form['u_name']
         password = request.form['pass']
-        cursor.execute('SELECT * FROM Users WHERE username = ? AND password = ?', (Username, password ))
+        cursor.execute('SELECT * FROM Users WHERE username = ? AND password = ?', (username, password ))
         data = cursor.fetchone()
         if  data!=None:
             flash('Logged in Successfully...')
