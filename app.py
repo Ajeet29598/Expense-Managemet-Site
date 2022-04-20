@@ -12,16 +12,17 @@ def index():
 def login():
 
     if request.method == 'POST':
-        session.permanent=True
+        # session.permanent=True
         connection = sqlite3.connect('users.db')
         cursor = connection.cursor()
         username = request.form['u_name']
         password = request.form['pass']
         cursor.execute('SELECT * FROM Users WHERE username = ? AND password = ?', (username, password ))
+        global data
         data = cursor.fetchone()
         if  data!=None:
-            flash('Logged in Successfully...')
             session['user']=data[1]
+            flash(f'{session["user"]} Logged in Successfully...')
             return redirect(url_for('home'))
         else:
             return redirect(url_for('error'))
@@ -41,16 +42,19 @@ def signup():
         cursor.execute(query,(email,username,password))
         connection.commit()
         if cursor.rowcount == 1:
+            flash('Your account created Successfully...')
             return redirect(url_for('login'))
         else:
-            print("data insert not successfull")
+            flash('Something Wrong! Try Again...')
+            return redirect(url_for('signup'))
+
     return render_template('signup.html')
 
 @app.route('/home')
 def home():
     if 'user' in session:
         return render_template('home.html')
-    else:     
+    else:
         return redirect(url_for('login'))
 
 @app.route('/add_expenses',methods=['GET','POST'])
@@ -78,7 +82,7 @@ def add_expenses():
 
 @app.route('/view',methods = ['GET','POST'])
 def view():
-    if 'user' in session: 
+    if 'user' in session:
         connection = sqlite3.connect("users.db")
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
@@ -123,7 +127,7 @@ def delete(id):
         connection = sqlite3.connect("users.db")
         cursor = connection.cursor()
         cursor.execute('DELETE from Products WHERE id={0}'.format(id))
-        connection.commit() 
+        connection.commit()
         flash('Deleted Successfully')
         return redirect(url_for('view'))
     else:
@@ -150,7 +154,8 @@ def about():
 @app.route('/logout')
 def logout():
     session.pop('user',None)
-    flash('Logged out Successfully...')
+    session['user']=data[1]
+    flash(f'{session["user"]} Logged out Successfully...')
     return redirect(url_for('login'))
 
 if __name__ == "__main__":
