@@ -4,11 +4,9 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = 'Ajeet29599@#'
 
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -27,7 +25,6 @@ def login():
         else:
             return redirect(url_for('error'))
     return render_template('login.html')
-
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -50,14 +47,12 @@ def signup():
 
     return render_template('signup.html')
 
-
 @app.route('/home')
 def home():
     if 'user' in session:
         return render_template('home.html')
     else:
         return redirect(url_for('login'))
-
 
 @app.route('/add_expenses', methods=['GET', 'POST'])
 def add_expenses():
@@ -82,7 +77,6 @@ def add_expenses():
     else:
         return redirect(url_for('login'))
 
-
 @app.route('/view', methods=['GET', 'POST'])
 def view():
     if 'user' in session:
@@ -94,7 +88,6 @@ def view():
         return render_template("view.html", rows=rows)
     else:
         return redirect(url_for('login'))
-
 
 @app.route('/update/<int:id>', methods=['POST', 'GET'])
 def update(id):
@@ -126,7 +119,6 @@ def update(id):
     else:
         return redirect(url_for('login'))
 
-
 @app.route('/delete/<int:id>', methods=['POST', 'GET'])
 def delete(id):
     if 'user' in session:
@@ -139,11 +131,9 @@ def delete(id):
     else:
         return redirect(url_for('login'))
 
-
 @app.route('/error')
 def error():
     return render_template('error.html')
-
 
 @app.route('/contact')
 def contact():
@@ -152,7 +142,6 @@ def contact():
     else:
         return redirect(url_for('login'))
 
-
 @app.route('/about')
 def about():
     if 'user' in session:
@@ -160,14 +149,12 @@ def about():
     else:
         return redirect(url_for('login'))
 
-
 @app.route('/logout')
 def logout():
     session['user'] = data[1]
     session.pop('user', None)
     flash('Logged out Successfully...')
     return redirect(url_for('login'))
-
 
 if __name__ == "__main__":
     app.run(debug=True)
